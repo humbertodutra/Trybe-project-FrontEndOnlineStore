@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
+import ListProducts from '../../Components/listProducts';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -32,6 +33,7 @@ export default class Home extends React.Component {
         <h1 data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </h1>
+        <ListProducts />
       </>
     );
   }
