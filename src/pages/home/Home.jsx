@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { FaShoppingCart } from 'react-icons/fa';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -16,6 +18,14 @@ export default class Home extends React.Component {
     const { value } = this.state;
     return (
       <>
+
+        <Link
+          data-testid="shopping-cart-button"
+          to="/carrinho-de-compras"
+        >
+          <FaShoppingCart />
+        </Link>
+
         <form>
           <input value={ value } type="text" onChange={ this.handleInputChange } />
         </form>
