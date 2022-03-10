@@ -1,7 +1,8 @@
 import React from 'react';
+import propTypes from 'prop-types';
 import { getCategories } from '../services/api';
 
-class ListProducts extends React.Component {
+export default class ListProducts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,6 +12,12 @@ class ListProducts extends React.Component {
 
   componentDidMount() {
     getCategories().then((data) => this.setState({ categories: data }));
+  }
+
+  handleSelectCategories = async (e) => {
+    const { onChangeFunction, apiRequest } = this.props;
+    await onChangeFunction(e);
+    apiRequest(e);
   }
 
   render() {
@@ -28,6 +35,7 @@ class ListProducts extends React.Component {
               id={ element.id }
               name="categories"
               value={ element.id }
+              onChange={ (e) => this.handleSelectCategories(e) }
             />
             { element.name }
           </label>
@@ -36,4 +44,8 @@ class ListProducts extends React.Component {
     );
   }
 }
-export default ListProducts;
+
+ListProducts.propTypes = {
+  onChangeFunction: propTypes.func.isRequired,
+  apiRequest: propTypes.func.isRequired,
+};
