@@ -10,6 +10,7 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       value: '',
+      categorieId: '',
       filteredItems: [],
     };
   }
@@ -18,10 +19,14 @@ export default class Home extends React.Component {
     this.setState({ value });
   };
 
+  handleCategoriesSelect = ({ target: { value } }) => {
+    this.setState({ categorieId: value });
+  }
+
   gettingFilteredItems = (event) => {
-    const { value } = this.state;
+    const { value, categorieId } = this.state;
     event.preventDefault();
-    getProductsFromCategoryAndQuery('', value)
+    getProductsFromCategoryAndQuery(categorieId, value)
       .then((filteredItems) => this.setState({ filteredItems: filteredItems.results }));
   };
 
@@ -32,7 +37,6 @@ export default class Home extends React.Component {
         <Link data-testid="shopping-cart-button" to="/carrinho-de-compras">
           <FaShoppingCart />
         </Link>
-
         <form>
           <input
             data-testid="query-input"
@@ -51,7 +55,7 @@ export default class Home extends React.Component {
         <h1 data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </h1>
-        <ListProducts />
+        <ListProducts onChangeFunction={ this.handleCategoriesSelect } />
         {filteredItems.length > 0 ? (
           filteredItems.map((element, index) => (
             <Card key={ index } filteredItems={ element } />

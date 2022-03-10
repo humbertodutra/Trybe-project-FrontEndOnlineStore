@@ -1,7 +1,8 @@
 import React from 'react';
+import propTypes from 'prop-types';
 import { getCategories } from '../services/api';
 
-class ListProducts extends React.Component {
+export default class ListProducts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,6 +15,8 @@ class ListProducts extends React.Component {
   }
 
   render() {
+    const { onChangeFunction } = this.props;
+
     const { categories } = this.state;
     return (
       <aside>
@@ -28,6 +31,7 @@ class ListProducts extends React.Component {
               id={ element.id }
               name="categories"
               value={ element.id }
+              onChange={ onChangeFunction }
             />
             { element.name }
           </label>
@@ -36,4 +40,7 @@ class ListProducts extends React.Component {
     );
   }
 }
-export default ListProducts;
+
+ListProducts.propTypes = {
+  onChangeFunction: propTypes.func.isRequired,
+};
