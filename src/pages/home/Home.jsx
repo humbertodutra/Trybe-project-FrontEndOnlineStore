@@ -10,7 +10,7 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       value: '',
-      categorieId: '',
+      categoriesId: '',
       filteredItems: [],
     };
   }
@@ -20,13 +20,13 @@ export default class Home extends React.Component {
   };
 
   handleCategoriesSelect = ({ target: { value } }) => {
-    this.setState({ categorieId: value });
+    this.setState({ categoriesId: value });
   }
 
   gettingFilteredItems = (event) => {
-    const { value, categorieId } = this.state;
+    const { value, categoriesId } = this.state;
     event.preventDefault();
-    getProductsFromCategoryAndQuery(categorieId, value)
+    getProductsFromCategoryAndQuery(categoriesId, value)
       .then((filteredItems) => this.setState({ filteredItems: filteredItems.results }));
   };
 
@@ -55,7 +55,7 @@ export default class Home extends React.Component {
         <h1 data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </h1>
-        <ListProducts onChangeFunction={ this.handleCategoriesSelect } />
+        <ListProducts onChangeFunction={ this.handleCategoriesSelect } apiRequest={ this.gettingFilteredItems } />
         {filteredItems.length > 0 ? (
           filteredItems.map((element, index) => (
             <Card key={ index } filteredItems={ element } />
