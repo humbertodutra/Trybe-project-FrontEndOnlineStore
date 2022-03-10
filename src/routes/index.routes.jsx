@@ -11,6 +11,7 @@ export default class AppRoutes extends React.Component {
         <Route exact path="/carrinho-de-compras" component={ ShoppingCart } />
         <Route />
         <Route />
+        <Route />
       </Switch>
     );
   }
