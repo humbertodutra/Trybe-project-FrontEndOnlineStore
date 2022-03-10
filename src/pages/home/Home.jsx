@@ -21,7 +21,7 @@ export default class Home extends React.Component {
 
   handleCategoriesSelect = ({ target: { value } }) => {
     this.setState({ categoriesId: value });
-  }
+  };
 
   gettingFilteredItems = (event) => {
     const { value, categoriesId } = this.state;
@@ -55,7 +55,10 @@ export default class Home extends React.Component {
         <h1 data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </h1>
-        <ListProducts onChangeFunction={ this.handleCategoriesSelect } apiRequest={ this.gettingFilteredItems } />
+        <ListProducts
+          onChangeFunction={ this.handleCategoriesSelect }
+          apiRequest={ this.gettingFilteredItems }
+        />
         {filteredItems.length > 0 ? (
           filteredItems.map((element, index) => (
             <Card key={ index } filteredItems={ element } />
