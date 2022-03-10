@@ -15,9 +15,9 @@ export default class ListProducts extends React.Component {
   }
 
   handleSelectCategories = async (e) => {
-    const { onChangeFunction, apiRequest } = this.props;
-    await onChangeFunction(e);
-    apiRequest(e);
+    const { handleInputChange, gettingFilteredItems } = this.props;
+    await handleInputChange(e);
+    gettingFilteredItems();
   }
 
   render() {
@@ -35,7 +35,7 @@ export default class ListProducts extends React.Component {
               id={ element.id }
               name="categories"
               value={ element.id }
-              onChange={ (e) => this.handleSelectCategories(e) }
+              onChange={ this.handleSelectCategories }
             />
             { element.name }
           </label>
@@ -46,6 +46,6 @@ export default class ListProducts extends React.Component {
 }
 
 ListProducts.propTypes = {
-  onChangeFunction: propTypes.func.isRequired,
-  apiRequest: propTypes.func.isRequired,
+  handleInputChange: propTypes.func.isRequired,
+  gettingFilteredItems: propTypes.func.isRequired,
 };

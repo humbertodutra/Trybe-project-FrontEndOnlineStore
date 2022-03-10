@@ -4,43 +4,45 @@ import { FaShoppingCart } from 'react-icons/fa';
 import ListProducts from '../../Components/listProducts';
 import Card from '../Card/Card';
 import { getProductsFromCategoryAndQuery } from '../../services/api';
+import Loading from '../../Components/Loading';
 
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
-      categoriesId: '',
+      searchBar: '',
+      categories: '',
       filteredItems: [],
+      loading: false,
     };
   }
 
-  handleInputChange = ({ target: { value } }) => {
-    this.setState({ value });
-  };
-
-  handleCategoriesSelect = ({ target: { value } }) => {
-    this.setState({ categoriesId: value });
+  handleInputChange = ({ target: { value, name } }) => {
+    this.setState({ [name]: value });
   };
 
   gettingFilteredItems = (event) => {
-    const { value, categoriesId } = this.state;
-    event.preventDefault();
-    getProductsFromCategoryAndQuery(categoriesId, value)
-      .then((filteredItems) => this.setState({ filteredItems: filteredItems.results }));
+    const { searchBar, categories } = this.state;
+    if (event) event.preventDefault();
+    this.setState({ loading: true });
+    getProductsFromCategoryAndQuery(categories, searchBar).then((filteredItems) => {
+      this.setState({ filteredItems: filteredItems.results, loading: false });
+    });
   };
 
   render() {
-    const { value, filteredItems } = this.state;
+    const { searchBar, filteredItems, loading } = this.state;
     return (
       <>
+        {loading && <Loading />}
         <Link data-testid="shopping-cart-button" to="/carrinho-de-compras">
           <FaShoppingCart />
         </Link>
         <form>
           <input
+            name="searchBar"
             data-testid="query-input"
-            value={ value }
+            value={ searchBar }
             type="text"
             onChange={ this.handleInputChange }
           />
@@ -56,8 +58,8 @@ export default class Home extends React.Component {
           Digite algum termo de pesquisa ou escolha uma categoria.
         </h1>
         <ListProducts
-          onChangeFunction={ this.handleCategoriesSelect }
-          apiRequest={ this.gettingFilteredItems }
+          handleInputChange={ this.handleInputChange }
+          gettingFilteredItems={ this.gettingFilteredItems }
         />
         {filteredItems.length > 0 ? (
           filteredItems.map((element, index) => (
