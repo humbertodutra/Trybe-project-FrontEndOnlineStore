@@ -20,12 +20,12 @@ export default class ProductDetails extends Component {
 
   render() {
     const { details: { thumbnail, title, price }, details } = this.state;
-    const { addCart, cart } = this.props;
+    const { addCart, cartLength } = this.props;
     return (
       <>
         <Link data-testid="shopping-cart-button" to="/carrinho-de-compras">
           <FaShoppingCart />
-          {cart.length}
+          <p data-testid="shopping-cart-size">{cartLength}</p>
         </Link>
         <img src={ thumbnail } alt={ `Imagem de ${title}` } />
         <p data-testid="product-detail-name">{title}</p>
@@ -53,12 +53,5 @@ ProductDetails.propTypes = {
     }),
   }).isRequired,
   addCart: propTypes.func.isRequired,
-  cart: propTypes.arrayOf(propTypes.shape({
-    filteredItems: propTypes.shape({
-      thumbnail: propTypes.string,
-      title: propTypes.string,
-      price: propTypes.number,
-      id: propTypes.string,
-    }),
-  })).isRequired,
+  cartLength: propTypes.number.isRequired,
 };

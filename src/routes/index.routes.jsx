@@ -10,13 +10,29 @@ export default class AppRoutes extends React.Component {
     super(props);
     this.state = {
       cart: [],
+      cartLength: 0,
     };
+  }
+
+  componentDidMount() {
+    this.setState({
+      cart: JSON.parse(localStorage.getItem('cart')) || [],
+      cartLength: JSON.parse(localStorage.getItem('cartLength')) || 0,
+    });
   }
 
   addCart = (param) => {
     this.setState((previous) => ({
       cart: [...previous.cart, param],
-    }));
+    }), () => {
+      const { cart } = this.state;
+      localStorage.setItem('cart', JSON.stringify(cart));
+      localStorage.setItem('cartLength', JSON.stringify(cart.length));
+      this.setState({
+        cartLength: JSON.parse(localStorage.getItem('cartLength')),
+        cart: JSON.parse(localStorage.getItem('cart')),
+      });
+    });
   };
 
   render() {
