@@ -3,6 +3,7 @@ import propTypes from 'prop-types';
 import { FaShoppingCart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { getProductsById } from '../services/api';
+import Evaluation from './Evaluation';
 
 export default class ProductDetails extends Component {
   constructor() {
@@ -37,6 +38,9 @@ export default class ProductDetails extends Component {
           Adicionar ao carrinho
 
         </button>
+        <div>
+          <Evaluation />
+        </div>
       </>
     );
   }
