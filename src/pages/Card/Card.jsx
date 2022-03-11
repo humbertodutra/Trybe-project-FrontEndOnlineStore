@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 
 export default class Cards extends React.Component {
   render() {
-    const { filteredItems: { thumbnail, title, price, id } } = this.props;
+    const { filteredItems: { thumbnail, title, price, id },
+      addCart, filteredItems } = this.props;
     return (
       <div data-testid="product">
         <img src={ thumbnail } alt={ `Imagem de ${title}` } />
@@ -16,6 +17,13 @@ export default class Cards extends React.Component {
         >
           Mais detalhes
         </Link>
+        <button
+          data-testid="product-add-to-cart"
+          type="submit"
+          onClick={ () => addCart(filteredItems) }
+        >
+          Adicionar ao Carrinho
+        </button>
       </div>
     );
   }
@@ -28,4 +36,5 @@ Cards.propTypes = {
     price: propTypes.number,
     id: propTypes.string,
   }).isRequired,
+  addCart: propTypes.func.isRequired,
 };
