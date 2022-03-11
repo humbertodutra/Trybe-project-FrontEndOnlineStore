@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
+import propTypes from 'prop-types';
 import ListProducts from '../../Components/listProducts';
 import Card from '../Card/Card';
 import { getProductsFromCategoryAndQuery } from '../../services/api';
@@ -32,11 +33,15 @@ export default class Home extends React.Component {
 
   render() {
     const { searchBar, filteredItems, loading } = this.state;
+    const { addCart, cart } = this.props;
+    console.log(addCart);
+
     return (
       <>
         {loading && <Loading />}
         <Link data-testid="shopping-cart-button" to="/carrinho-de-compras">
           <FaShoppingCart />
+          {cart.length}
         </Link>
         <form>
           <input
@@ -63,7 +68,7 @@ export default class Home extends React.Component {
         />
         {filteredItems.length > 0 ? (
           filteredItems.map((element, index) => (
-            <Card key={ index } filteredItems={ element } />
+            <Card key={ index } filteredItems={ element } addCart={ addCart } />
           ))
         ) : (
           <p>Nenhum produto foi encontrado</p>
@@ -72,3 +77,15 @@ export default class Home extends React.Component {
     );
   }
 }
+
+Home.propTypes = {
+  addCart: propTypes.func.isRequired,
+  cart: propTypes.arrayOf(propTypes.shape({
+    filteredItems: propTypes.shape({
+      thumbnail: propTypes.string,
+      title: propTypes.string,
+      price: propTypes.number,
+      id: propTypes.string,
+    }),
+  })).isRequired,
+};
