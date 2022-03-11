@@ -34,8 +34,6 @@ export default class Home extends React.Component {
   render() {
     const { searchBar, filteredItems, loading } = this.state;
     const { addCart, cart } = this.props;
-    console.log(addCart);
-
     return (
       <>
         {loading && <Loading />}
