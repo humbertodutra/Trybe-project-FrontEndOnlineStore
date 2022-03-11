@@ -34,7 +34,15 @@ export default class AppRoutes extends React.Component {
           path="/carrinho-de-compras"
           render={ () => <ShoppingCart { ...this.state } /> }
         />
-        <Route exact path="/ProductDetails/:id" component={ ProductDetails } />
+        <Route
+          exact
+          path="/ProductDetails/:id"
+          render={ (props) => (<ProductDetails
+            { ...props }
+            { ...this.state }
+            addCart={ this.addCart }
+          />) }
+        />
         <Route />
         <Route />
       </Switch>
