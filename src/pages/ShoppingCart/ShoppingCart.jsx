@@ -13,7 +13,7 @@ export default class ShoppingCart extends Component {
     return (
       <div>
         {cart.length > 0 ? (
-          cart.map((element) => <CartItems key={ element.id } element={ element } />)
+          cart.map((element, index) => <CartItems key={ index } element={ element } />)
         ) : (
           <h1 data-testid="shopping-cart-empty-message">Seu carrinho está vazio </h1>
         )}

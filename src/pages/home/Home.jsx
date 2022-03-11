@@ -33,13 +33,13 @@ export default class Home extends React.Component {
 
   render() {
     const { searchBar, filteredItems, loading } = this.state;
-    const { addCart, cart } = this.props;
+    const { addCart, cartLength } = this.props;
     return (
       <>
         {loading && <Loading />}
         <Link data-testid="shopping-cart-button" to="/carrinho-de-compras">
           <FaShoppingCart />
-          {cart.length}
+          <p data-testid="shopping-cart-size">{cartLength}</p>
         </Link>
         <form>
           <input
@@ -78,12 +78,5 @@ export default class Home extends React.Component {
 
 Home.propTypes = {
   addCart: propTypes.func.isRequired,
-  cart: propTypes.arrayOf(propTypes.shape({
-    filteredItems: propTypes.shape({
-      thumbnail: propTypes.string,
-      title: propTypes.string,
-      price: propTypes.number,
-      id: propTypes.string,
-    }),
-  })).isRequired,
+  cartLength: propTypes.number.isRequired,
 };
