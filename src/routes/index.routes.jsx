@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router';
 import ProductDetails from '../Components/ProductDetails';
 import Home from '../pages/home/Home';
 import ShoppingCart from '../pages/ShoppingCart/ShoppingCart';
+import Checkout from '../Components/Checkout';
 
 export default class AppRoutes extends React.Component {
   constructor(props) {
@@ -32,7 +33,10 @@ export default class AppRoutes extends React.Component {
         <Route
           exact
           path="/carrinho-de-compras"
-          render={ () => <ShoppingCart { ...this.state } /> }
+          render={ (props) => (<ShoppingCart
+            { ...this.state }
+            { ...props }
+          />) }
         />
         <Route
           exact
@@ -43,7 +47,14 @@ export default class AppRoutes extends React.Component {
             addCart={ this.addCart }
           />) }
         />
-        <Route />
+        <Route
+          exact
+          path="/checkout"
+          render={ (props) => (<Checkout
+            { ...props }
+            { ... this.state }
+          />) }
+        />
         <Route />
       </Switch>
     );
