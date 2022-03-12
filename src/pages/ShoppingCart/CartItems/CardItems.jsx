@@ -6,13 +6,18 @@ export default class CartItems extends React.Component {
     super(props);
     this.state = {
       amount: 1,
+      hasDisabled: false,
     };
   }
 
-  shouldIncreasesItems = (number) => this.setState({ amount: number > 0 ? number : 0 });
+  shouldIncreasesItems = (number, MAX_VALUE) => {
+    const { amount } = this.state;
+    this.setState({ amount: number > 0 ? number : 0 },
+      () => this.setState({ hasDisabled: amount === MAX_VALUE - 1 }));
+  };
 
   render() {
-    const { amount } = this.state;
+    const { amount, hasDisabled } = this.state;
     const { element } = this.props;
 
     return (
@@ -29,9 +34,10 @@ export default class CartItems extends React.Component {
         </button>
         <p data-testid="shopping-cart-product-quantity">{amount}</p>
         <button
+          disabled={ hasDisabled }
           data-testid="product-increase-quantity"
           type="button"
-          onClick={ () => this.shouldIncreasesItems(amount + 1) }
+          onClick={ () => this.shouldIncreasesItems(amount + 1, element.available_quantity) }
         >
           +
         </button>
