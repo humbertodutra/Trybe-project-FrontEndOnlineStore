@@ -37,7 +37,8 @@ export default class CartItems extends React.Component {
           disabled={ hasDisabled }
           data-testid="product-increase-quantity"
           type="button"
-          onClick={ () => this.shouldIncreasesItems(amount + 1, element.available_quantity) }
+          onClick={ () => this
+            .shouldIncreasesItems(amount + 1, element.available_quantity) }
         >
           +
         </button>
@@ -52,5 +53,6 @@ CartItems.propTypes = {
     title: propTypes.string,
     price: propTypes.number,
     id: propTypes.string,
+    available_quantity: propTypes.number,
   }).isRequired,
 };
