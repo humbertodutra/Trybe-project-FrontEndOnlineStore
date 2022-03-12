@@ -4,12 +4,20 @@ import { Link } from 'react-router-dom';
 
 export default class Cards extends React.Component {
   render() {
-    const { filteredItems: { thumbnail, title, price, id },
-      addCart, filteredItems } = this.props;
+    const { filteredItems: { thumbnail,
+      title,
+      price,
+      id,
+      shipping: {
+        free_shipping: frete,
+      } },
+    addCart,
+    filteredItems } = this.props;
     return (
       <div data-testid="product">
         <img src={ thumbnail } alt={ `Imagem de ${title}` } />
         <p>{title}</p>
+        {frete && <div data-testid="free-shipping">Frete Grátis</div>}
         <p>{price}</p>
         <Link
           to={ `/ProductDetails/${id}` }
@@ -35,6 +43,9 @@ Cards.propTypes = {
     title: propTypes.string,
     price: propTypes.number,
     id: propTypes.string,
+    shipping: propTypes.shape({
+      free_shipping: propTypes.bool,
+    }).isRequired,
   }).isRequired,
   addCart: propTypes.func.isRequired,
 };
